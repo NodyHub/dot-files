@@ -8,8 +8,9 @@ set hlsearch
 set incsearch
 
 " Coloring
+set termguicolors
+colorscheme molokai
 syntax enable
-colorscheme elflord
 
 " Tabbing
 set expandtab     " Use only space
