@@ -1,0 +1,7 @@
+*.git*
+*exclude.lst*
+*.swp
+deploy.sh
+LICENSE
+README.md
+remote-hosts
