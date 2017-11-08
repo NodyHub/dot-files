@@ -8,8 +8,8 @@ set hlsearch
 set incsearch
 
 " Coloring
-set termguicolors
-colorscheme molokai
+" set termguicolors
+colorscheme desert
 syntax enable
 
 " Tabbing
