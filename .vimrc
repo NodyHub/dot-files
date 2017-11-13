@@ -25,3 +25,6 @@ if has("autocmd")
    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 endif
 
+" UTF-8 encodig wihthin files
+set encoding=utf-8
+set termencoding=utf-8
