@@ -119,7 +119,7 @@ else
    local user_color=$colorfg{green}
 fi
 
-PS1="$bold$hostname $user_color${str}[$uncolorfg%(4~|/.../%3~|%~)$user_color${str}]$rootorwhat $uncolorfg$unbold"
+PS1="$bold$hostname $user_color${str}[$uncolorfg%(4~|../%3~|%~)$user_color${str}]$rootorwhat $uncolorfg$unbold"
 
 
 
