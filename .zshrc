@@ -253,6 +253,7 @@ bindkey "^E" end-of-line
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
 zstyle ':completion:*' special-dirs true
+zstyle ":completion:*:commands" rehash 1
 
 
 # manpage colors
