@@ -101,3 +101,8 @@ set statusline+=%0*\ \ %m%r%w\ %P\ \                      "Modified? Readonly?  
 " UTF-8 encodig wihthin files
 set encoding=utf-8
 set termencoding=utf-8
+
+" Tabbing between multple windows
+map <F7> :bp<CR>
+map <F8> :bn<CR>
+
