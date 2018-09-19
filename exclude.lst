@@ -5,3 +5,4 @@ deploy.sh
 LICENSE
 README.md
 remote-hosts
+gsettings.sh
