@@ -113,14 +113,30 @@ function extract()      # Handy Extract Program
 function ff() { find . -type f -iname '*'"$*"'*' -ls ; }
 
 
+# check if connection is from remote
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+  SESSION_TYPE=remote/ssh                                                                                                         
+# many other tests omitted
+else
+  case $(ps -o comm= -p $PPID) in
+    sshd|*/sshd) SESSION_TYPE=remote/ssh;;
+    *) SESSION_TYPE=local;;
+  esac
+fi
+
+
 if [ `whoami` = 'root' ]; then
    local user_color=$colorfg{red}
 else
    local user_color=$colorfg{green}
 fi
 
-PS1="$bold$hostname $user_color${str}[$uncolorfg%(4~|../%3~|%~)$user_color${str}]$rootorwhat $uncolorfg$unbold"
-
+if [ "$SESSION_TYPE" = "local" ]
+then
+   PS1="$bold$user_color${str}[$uncolorfg%(4~|../%3~|%~)$user_color${str}]$rootorwhat $uncolorfg$unbold"
+else
+   PS1="$bold$hostname $user_color${str}[$uncolorfg%(4~|../%3~|%~)$user_color${str}]$rootorwhat $uncolorfg$unbold"
+fi
 
 
 ## Modified commands ## {{{
