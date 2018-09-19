@@ -150,6 +150,8 @@ alias nano='nano -w'
 alias dmesg='dmesg -HL'
 # }}}
 
+alias xopen='xdg-open'
+
 ## New commands ## {{{
 alias da='date "+%A, %B %d, %Y [%T]"'
 alias du1='du --max-depth=1'
