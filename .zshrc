@@ -299,3 +299,6 @@ case $TERM in
         precmd () {print -Pn "\e]0;%n@%m: %~\a"}
         ;;
 esac
+
+# disable auto blank screen
+xset s off && xset -dpms
