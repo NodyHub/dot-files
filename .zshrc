@@ -9,6 +9,8 @@ setopt completealiases
 # additional cmds
 setopt promptsubst
 
+# Ensure Prompt Coloring
+TERM=xterm-256color 
 
 # arrow keys navi
 zstyle ':completion:*' menu select
