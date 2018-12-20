@@ -1,6 +1,10 @@
+" Coloring
+colorscheme desert
+syntax enable
+
 " Highlight line
 set cursorline
-hi CursorLine term=bold,underline cterm=bold,underline guibg=Grey40 gui=underline                                                                                                    
+hi CursorLine term=bold,underline cterm=bold,underline guibg=Grey40 gui=underline
 
 
 " Search Option
@@ -40,10 +44,6 @@ set hidden
 set backspace=indent,eol,start
 set ttimeoutlen=100
 
-" Coloring
-" set termguicolors
-colorscheme desert
-syntax enable
 
 " Tabbing
 set expandtab     " Use only space
