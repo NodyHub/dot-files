@@ -1,8 +1,13 @@
 " Highlight line
 set cursorline
+hi CursorLine term=bold,underline cterm=bold,underline guibg=Grey40 gui=underline                                                                                                    
+
 
 " Search Option
-" set nocursorline
+set incsearch
+set hlsearch
+set ignorecase
+
 set title
 set noautoindent
 set ruler
@@ -28,15 +33,12 @@ set smartcase
 set ignorecase
 set sidescroll=5
 set scrolloff=4
-set hlsearch
 set ttyfast
 set history=10000
 set hidden
 " set number                                    " Line numbers
 set backspace=indent,eol,start
 set ttimeoutlen=100
-
-" set incsearch
 
 " Coloring
 " set termguicolors
