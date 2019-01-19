@@ -289,6 +289,7 @@ man() {
          man "$@"
 }
 
+LESSCHARSET=UTF-8
 
 # SDL_VIDEO_FULLSCREEN_HEAD=1
 
