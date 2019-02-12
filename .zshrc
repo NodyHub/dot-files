@@ -294,8 +294,8 @@ LESSCHARSET=UTF-8
 # SDL_VIDEO_FULLSCREEN_HEAD=1
 
 # Extend path
-export PATH=`echo ~`/bin:/sbin:$PATH
-
+export PATH="$HOME/bin:/sbin:$PATH:$HOME/go/bin"
+export GOPATH="$HOME/go"
 
 case $TERM in
     xterm*)
