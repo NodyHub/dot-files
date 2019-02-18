@@ -116,7 +116,7 @@ function ff() { find . -type f -iname '*'"$*"'*' -ls ; }
 
 
 # check if connection is from remote
-if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ -n "$SESSION_TYPE" ]; then
   SESSION_TYPE=remote/ssh                                                                                                         
 # many other tests omitted
 else
