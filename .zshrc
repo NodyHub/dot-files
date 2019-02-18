@@ -150,6 +150,7 @@ alias du='du -c -h'
 alias mkdir='mkdir -p -v'
 alias nano='nano -w'
 alias dmesg='dmesg -HL'
+alias meh='echo "¯\_(ツ)_/¯"'
 # }}}
 
 alias xopen='xdg-open'
