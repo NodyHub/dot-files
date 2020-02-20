@@ -1,5 +1,5 @@
 export EDITOR="vim"
-export ZSH="~/.zsh/"
+export ZSH="$HOME/.zsh/"
 
 # load plugins
 source $ZSH/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
