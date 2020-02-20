@@ -1,5 +1,10 @@
 export EDITOR="vim"
-export ZSH_CUSTOM="~/.zsh/custom/"
+export ZSH="~/.zsh/"
+
+# load plugins
+source $ZSH/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+source $ZSH/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+
 #
 # command autocompletion
 autoload -U compinit promptinit
@@ -18,6 +23,7 @@ zstyle ':completion:*' menu select
 
 # zsh coloring & styling
 autoload -U colors && colors
+
 
 local curdir="%d"
 local hostname="%M"
