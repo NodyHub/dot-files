@@ -1,7 +1,11 @@
 #!/bin/bash
 
 DOT_FILE=dot-file.zip
-EXTRACT_CMD="cd ~ ; unzip -o $DOT_FILE ; rm $DOT_FILE"
+EXTRACT_CMD="cd ~ ; [ -d .zsh ] && rm -rf .zsh ; unzip -o $DOT_FILE ; rm $DOT_FILE"
+
+echo [+] Fetch ZSH plugins
+git submodule init
+git submodule update
 
 echo [+] Prepare zipfile `pwd`/$DOT_FILE
 if [ -f $DOT_FILE ]
