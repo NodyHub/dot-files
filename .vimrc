@@ -1,6 +1,6 @@
 " Coloring
-colorscheme desert
 syntax enable
+set background=dark
 
 " Highlight line
 set cursorline
@@ -23,19 +23,19 @@ set laststatus=2
 set nomodeline
 set showcmd
 set showmatch
-set tabstop=4
-set shiftwidth=4
+set tabstop=3
+set shiftwidth=3
 set expandtab
 set cinoptions=(0,m1,:1
 set formatoptions=tcqr2
 set laststatus=2
 set nomodeline
 set clipboard=unnamed
-set softtabstop=4
+set softtabstop=3
 set showtabline=1
 set smartcase
 set ignorecase
-set sidescroll=5
+set sidescroll=2
 set scrolloff=4
 set ttyfast
 set history=10000

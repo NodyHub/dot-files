@@ -16,7 +16,7 @@ setopt completealiases
 setopt promptsubst
 
 # Ensure Prompt Coloring
-TERM=xterm-256color 
+# ''  TERM=xterm-256color 
 
 # arrow keys navi
 zstyle ':completion:*' menu select
@@ -142,9 +142,9 @@ fi
 
 if [ "$SESSION_TYPE" = "local" ]
 then
-   PS1="$bold$user_color${str}[$uncolorfg%(4~|../%3~|%~)$user_color${str}]$rootorwhat $uncolorfg$unbold"
+   PS1="$bold$user_color${str}[$uncolorfg%(4~|../%2~|%~)$user_color${str}]$rootorwhat $uncolorfg$unbold"
 else
-   PS1="$bold$hostname $user_color${str}[$uncolorfg%(4~|../%3~|%~)$user_color${str}]$rootorwhat $uncolorfg$unbold"
+   PS1="$uncolorfg$bold$hostname $user_color${str}[$uncolorfg%(4~|../%2~|%~)$user_color${str}]$rootorwhat $uncolorfg$unbold"
 fi
 
 

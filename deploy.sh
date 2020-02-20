@@ -1,7 +1,7 @@
 #!/bin/bash
 
-DOT_FILE=dot-file.zip
-EXTRACT_CMD="cd ~ ; [ -d .zsh ] && rm -rf .zsh ; unzip -o $DOT_FILE ; rm $DOT_FILE"
+DOT_FILE=dfiles.tar.gz
+EXTRACT_CMD="cd ~ ; [ -d .zsh ] && rm -rf .zsh ; tar xvzf $DOT_FILE -C . ; rm $DOT_FILE"
 
 echo [+] Fetch ZSH plugins
 git submodule init
@@ -12,7 +12,8 @@ if [ -f $DOT_FILE ]
 then
 	rm $DOT_FILE
 fi
-/usr/bin/zip -r $DOT_FILE . -x@exclude.lst
+tar -c --exclude-from exclude.lst  -zvf $DOT_FILE .
+# /usr/bin/zip -r $DOT_FILE . -x@exclude.lst
 
 if [ -f remote-hosts ]
 then
