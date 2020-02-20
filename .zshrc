@@ -1,4 +1,5 @@
 export EDITOR="vim"
+export ZSH_CUSTOM="~/.zsh/custom/"
 #
 # command autocompletion
 autoload -U compinit promptinit
