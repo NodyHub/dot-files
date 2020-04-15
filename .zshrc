@@ -123,11 +123,12 @@ function ff() { find . -type f -iname '*'"$*"'*' -ls ; }
 
 
 # check if connection is from remote
-if [ -f /.dockerenv ]; then
+if [ -f /.dockerenv ] 
+then
   SESSION_TYPE=docker
-elif [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ -n "$SESSION_TYPE" ]; then
+elif [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ -n "$SESSION_TYPE" ] 
+then
   SESSION_TYPE=remote/ssh                                                                                                         
-# many other tests omitted
 else
   case $(ps -o comm= -p $PPID) in
     sshd|*/sshd) SESSION_TYPE=remote/ssh;;
@@ -136,13 +137,15 @@ else
 fi
 
 
-if [ `whoami` = 'root' ]; then
+if [ `whoami` = 'root' ]
+then
    local user_color=$colorfg{red}
 else
    local user_color=$colorfg{green}
 fi
 
-if if [ "$SESSION_TYPE" = "docker" ]; then 
+if [ "$SESSION_TYPE" = "docker" ]
+then 
     local host_color=$colorfg{magenta}
 else
     local host_color=$colorfg{cyan}
