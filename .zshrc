@@ -143,9 +143,9 @@ else
 fi
 
 if if [ "$SESSION_TYPE" = "docker" ]; then 
-    host_color=$colorfg{magenta}
+    local host_color=$colorfg{magenta}
 else
-    host_color=$colorfg{cyan}
+    local host_color=$colorfg{cyan}
 fi
 
 if [ "$SESSION_TYPE" = "local" ]
