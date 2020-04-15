@@ -123,7 +123,9 @@ function ff() { find . -type f -iname '*'"$*"'*' -ls ; }
 
 
 # check if connection is from remote
-if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ -n "$SESSION_TYPE" ]; then
+if [ -f /.dockerenv ]; then
+  SESSION_TYPE=docker
+elif [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ -n "$SESSION_TYPE" ]; then
   SESSION_TYPE=remote/ssh                                                                                                         
 # many other tests omitted
 else
@@ -140,11 +142,17 @@ else
    local user_color=$colorfg{green}
 fi
 
+if if [ "$SESSION_TYPE" = "docker" ]; then 
+    host_color=$colorfg{magenta}
+else
+    host_color=$colorfg{cyan}
+fi
+
 if [ "$SESSION_TYPE" = "local" ]
 then
    PS1="$bold$user_color${str}[$uncolorfg%(4~|../%2~|%~)$user_color${str}]$rootorwhat $uncolorfg$unbold"
 else
-   PS1="$uncolorfg$bold$hostname $user_color${str}[$uncolorfg%(4~|../%2~|%~)$user_color${str}]$rootorwhat $uncolorfg$unbold"
+   PS1="$host_color$bold$hostname $user_color${str}[$uncolorfg%(4~|../%2~|%~)$user_color${str}]$rootorwhat $uncolorfg$unbold"
 fi
 
 
