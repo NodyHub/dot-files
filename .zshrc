@@ -347,7 +347,7 @@ function bbd() {
   docker run -it --rm \
     --mount "type=bind,src=$projects,dst=/all" \
     --mount "type=bind,src=$project,dst=/data" \
-    --mount "type=bind,src=$wordlists,dst=/wordlist" \
+    --mount "type=bind,src=$wordlists,dst=/wordlists" \
     --workdir /data \
     --user "$(id -u):$(id -g)" \
     docker.io/nodyd/bb:latest
