@@ -235,7 +235,7 @@ LESSCHARSET=UTF-8
 # SDL_VIDEO_FULLSCREEN_HEAD=1
 
 # Extend path
-export PATH="$HOME/bin:/sbin:$PATH:$HOME/go/bin"
+export PATH="$HOME/bin:/sbin:$PATH:$HOME/go/bin:$HOME/.local/bin"
 export GOPATH="$HOME/go"
 
 case $TERM in
