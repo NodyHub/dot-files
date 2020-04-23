@@ -187,11 +187,13 @@ bindkey '^[[1;5C' emacs-forward-word
 bindkey '^[[1;5D' emacs-backward-word
 
 # set history
-setopt APPEND_HISTORY
-export HISTSIZE=9999999
+export HISTSIZE=10000
 export HISTFILE="$HOME/.history"
 export SAVEHIST=$HISTSIZE
 setopt hist_ignore_all_dups
+setopt append_history # append rather then overwrite                                                                                                                                                                                          
+setopt inc_append_history # add history immediately after typing a command
+unsetopt hist_save_by_copy
 
 # auto cd
 setopt autocd
