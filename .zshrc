@@ -187,6 +187,7 @@ bindkey '^[[1;5C' emacs-forward-word
 bindkey '^[[1;5D' emacs-backward-word
 
 # set history
+setopt APPEND_HISTORY
 export HISTSIZE=9999999
 export HISTFILE="$HOME/.history"
 export SAVEHIST=$HISTSIZE
@@ -333,25 +334,31 @@ function ff() { find . -type f -iname '*'"$*"'*' -ls ; }
 # Start BB Docker Container
 # --------------------------------------------------------------------------------------------------------------------------
 function bbd() {
-  wordlists=$HOME/bugbounty/resources/wordlists
+  dictionaries=$HOME/bugbounty/resources/dictionaries
   projects=$HOME/bugbounty/targets
-  if [ $1 ] 
+  hist_file=$projects/zsh-history
+  if [ $1 ]
   then
-    project=$projects/$1/$(date +%Y-%m-%d)
+    todays_project=$projects/$1/$(date +%Y-%m-%d)
   else
-    project=$projects/undefined/$(date +%Y-%m-%d)
+    todays_project=$projects/undefined/$(date +%Y-%m-%d)
+  fi
+  if [ ! -f $hist_file ]
+  then
+    echo Create: $hist_file
+    touch $hist_file
   fi
   # Create Directories if nrecessary
   if [ ! -d $wordlists ] && mkdir -p $wordlists
-  if [ ! -d $project ] && mkdir -p $project
+  if [ ! -d $todays_project ] && mkdir -p $todays_project
   docker run -it --rm \
+    --mount "type=bind,src=$hist_file,dst=/home/hunter/.history" \
     --mount "type=bind,src=$projects,dst=/all" \
-    --mount "type=bind,src=$project,dst=/data" \
-    --mount "type=bind,src=$wordlists,dst=/wordlists" \
+    --mount "type=bind,src=$todays_project,dst=/data" \
+    --mount "type=bind,src=$dictionaries,dst=/dict" \
     --workdir /data \
     --user "$(id -u):$(id -g)" \
     docker.io/nodyd/bb:latest
 }
-
 
 
