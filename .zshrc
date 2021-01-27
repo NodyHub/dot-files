@@ -341,9 +341,9 @@ function bbd() {
   projects=$HOME/bugbounty/targets
   hist_file=$projects/$project_name/zsh-history
   todays_project=$projects/$project_name/$(date +%Y-%m-%d)
-  if [ ! -f $hist_file ] && touch $hist_file
   if [ ! -d $wordlists ] && mkdir -p $wordlists
   if [ ! -d $todays_project ] && mkdir -p $todays_project
+  if [ ! -f $hist_file ] && touch $hist_file
   docker run -it --rm \
     --mount "type=bind,src=$hist_file,dst=/home/hunter/.history" \
     --mount "type=bind,src=$projects,dst=/all" \
