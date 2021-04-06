@@ -331,27 +331,3 @@ function extract()      # Handy Extract Program
 # Find Fuinction
 function ff() { find . -type f -iname '*'"$*"'*' -ls ; }
 
-
-# --------------------------------------------------------------------------------------------------------------------------
-# Start BB Docker Container
-# --------------------------------------------------------------------------------------------------------------------------
-function bbd() {
-  if [ $1 ] && project_name=$1 || project_name="undefined"
-  dictionaries=$HOME/bugbounty/resources/dictionaries
-  projects=$HOME/bugbounty/targets
-  hist_file=$projects/$project_name/zsh-history
-  todays_project=$projects/$project_name/$(date +%Y-%m-%d)
-  if [ ! -d $wordlists ] && mkdir -p $wordlists
-  if [ ! -d $todays_project ] && mkdir -p $todays_project
-  if [ ! -f $hist_file ] && touch $hist_file
-  docker run -it --rm \
-    --mount "type=bind,src=$hist_file,dst=/home/hunter/.history" \
-    --mount "type=bind,src=$projects,dst=/all" \
-    --mount "type=bind,src=$todays_project,dst=/data" \
-    --mount "type=bind,src=$dictionaries,dst=/dict" \
-    --workdir /data \
-    --user "$(id -u):$(id -g)" \
-    docker.io/nodyd/bb:latest
-}
-
-
