@@ -66,26 +66,51 @@ else
 fi
 
 
-if [ `whoami` = 'root' ]
-then
-   local user_color=$colorfg{red}
-else
-   local user_color=$colorfg{green}
-fi
-
-if [ "$SESSION_TYPE" = "docker" ]
-then 
-    local host_color=$colorfg{magenta}
-else
-    local host_color=$colorfg{cyan}
-fi
-
 if [ "$SESSION_TYPE" = "local" ]
 then
-   PS1="$bold$user_color${str}[$uncolorfg%(4~|../%2~|%~)$user_color${str}]$rootorwhat $uncolorfg$unbold"
+  hostname=""
 else
-   PS1="$host_color$bold$hostname $user_color${str}[$uncolorfg%(4~|../%2~|%~)$user_color${str}]$rootorwhat $uncolorfg$unbold"
+  hostname="$hostname "
 fi
+
+local user_color=$colorfg{green}
+if [ `whoami` = 'root' ]
+then
+   user_color=$colorfg{red}
+fi
+
+local host_color=$colorfg{cyan}
+if [ "$SESSION_TYPE" = "docker" ]
+then 
+    host_color=$colorfg{magenta}
+fi
+
+
+
+# Check if current working directory is in home directory or not
+current_path=$(pwd)
+path_start="/"
+if [[ $current_path == $HOME* ]] ;
+then
+    path_start="~"
+fi
+
+get_path() {
+  return "asd"
+}
+
+function foo() {
+  if [[ $(pwd) == $HOME* ]] 
+  then
+    echo -n "~"
+  fi
+  echo -n "/"
+}
+
+setopt PROMPT_SUBST
+
+
+PS1='$host_color$bold$hostname$user_color${str}[$uncolorfg%(4~|$(foo).../%2~|%~)$user_color${str}]$rootorwhat $uncolorfg$unbold'
 
 
 ## Modified commands ## {{{
@@ -115,6 +140,7 @@ alias ..='cd ..'
 alias ls='ls -hF --color=auto'
 alias lr='ls -R'                    # recursive ls
 alias ll='ls -l'
+
 alias la='ll -A'
 alias lx='ll -BX'                   # sort by extension
 alias lz='ll -rS'                   # sort by size
