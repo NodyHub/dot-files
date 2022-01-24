@@ -4,7 +4,7 @@ export ZSH="$HOME/.zsh/"
 # load plugins
 for plugin in $ZSH/*
 do
-  plugin=$(basedir $plugin)
+  plugin=$(basename $plugin)
   if [[ -f $ZSH/$plugin/$plugin.plugin.zsh ]]
   then
     source $ZSH/$plugin/$plugin.plugin.zsh
