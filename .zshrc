@@ -2,8 +2,14 @@ export EDITOR="vim"
 export ZSH="$HOME/.zsh/"
 
 # load plugins
-source $ZSH/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
-source $ZSH/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+for plugin in $ZSH/*
+do
+  plugin=$(basedir $plugin)
+  if [[ -f $ZSH/$plugin/$plugin.plugin.zsh ]]
+  then
+    source $ZSH/$plugin/$plugin.plugin.zsh
+  fi
+done
 
 #
 # command autocompletion
