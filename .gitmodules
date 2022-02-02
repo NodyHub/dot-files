@@ -8,3 +8,6 @@
 [submodule ".zsh/zsh-completions"]
 	path = .zsh/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions
+[submodule ".vim/pack/jvirtanen/start"]
+	path = .vim/pack/jvirtanen/start
+	url = https://github.com/jvirtanen/vim-hcl.git
