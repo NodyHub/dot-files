@@ -99,6 +99,14 @@ get_path() {
   return "asd"
 }
 
+function bg_count() {
+  cnt=$(jobs| wc -l | tr -d ' ')
+  if [[ $cnt -gt 0 ]]
+  then 
+    echo -n "[jobs:$cnt]"
+  fi
+}
+
 function foo() {
   if [[ $(pwd) == $HOME* ]] 
   then
@@ -109,6 +117,7 @@ function foo() {
 
 setopt PROMPT_SUBST
 
+RPROMPT='$(bg_count)'
 
 PS1='$host_color$bold$hostname$user_color${str}[$uncolorfg%(4~|$(foo).../%2~|%~)$user_color${str}]$rootorwhat $uncolorfg$unbold'
 
