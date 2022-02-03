@@ -231,7 +231,18 @@ unsetopt hist_save_by_copy
 setopt autocd
 
 # dir colors
-eval `dircolors -b ~/.dir_colors`
+
+if [[ $(uname) = "Darwin" ]]
+then 
+  export CLICOLOR=1
+  export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+  if [[ -e /opt/homebrew/bin/brew ]]
+  then 
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  fi
+else
+  eval `dircolors -b ~/.dir_colors`
+fi
 
 
 # reverse search with up-arrow
