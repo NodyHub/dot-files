@@ -1,1 +1,4 @@
-source ~/.profile
+if [[ -e ~/.profile ]]
+then
+  source ~/.profile
+fi
