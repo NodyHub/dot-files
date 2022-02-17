@@ -1,5 +1,6 @@
 export EDITOR="vim"
 export ZSH="$HOME/.zsh/"
+export GPG_TTY=$(tty)
 
 # load plugins
 for plugin in $ZSH/*
