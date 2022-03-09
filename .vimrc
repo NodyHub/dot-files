@@ -92,9 +92,6 @@ call plug#begin()
 " Statusline Plugin
 Plug 'https://github.com/vim-airline/vim-airline.git'
 
-" Autocompletion plugin
-Plug https://github.com/neoclide/coc.nvim.git
-
 call plug#end()
 
 " " Statusline {{{
