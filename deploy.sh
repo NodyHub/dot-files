@@ -3,9 +3,12 @@
 DOT_FILE=dfiles.tar.gz
 EXTRACT_CMD="cd ~ ; [ -d .zsh ] && rm -rf .zsh ; tar xvzf $DOT_FILE -C . ; rm $DOT_FILE"
 
-echo [+] Fetch ZSH plugins
+echo [+] Fetch ZSH and VIM plugins
 git submodule init
 git submodule update
+
+echo [+] Add VIM Plugin loader
+curl -fLo .vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 echo [+] Prepare zipfile `pwd`/$DOT_FILE
 if [ -f $DOT_FILE ]
@@ -13,7 +16,6 @@ then
 	rm $DOT_FILE
 fi
 tar -c --exclude-from exclude.lst  -zvf $DOT_FILE .
-# /usr/bin/zip -r $DOT_FILE . -x@exclude.lst
 
 if [ -f remote-hosts ]
 then
