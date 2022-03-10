@@ -87,12 +87,6 @@ endif
 
 
 " Add VIM Plugins
-call plug#begin()
-
-" Statusline Plugin
-Plug 'https://github.com/vim-airline/vim-airline.git'
-
-call plug#end()
 
 " " Statusline {{{
 " set statusline=
