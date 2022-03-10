@@ -10,3 +10,6 @@
 [submodule ".vim/plugged/vim-airline"]
 	path = .vim/plugged/vim-airline
 	url = https://github.com/vim-airline/vim-airline.git
+[submodule ".vim/bundle/vim-terraform"]
+	path = .vim/bundle/vim-terraform
+	url = https://github.com/hashivim/vim-terraform.git
