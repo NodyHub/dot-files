@@ -40,18 +40,21 @@ set scrolloff=4
 set ttyfast
 set history=10000
 set hidden
-" set number                                    " Line numbers
+set number
 set backspace=indent,eol,start
 set ttimeoutlen=100
 
 
 " Tabbing
 set expandtab     " Use only space
-set tabstop=3     " Width of tabstop
-set shiftwidth=3  " Indent width
+set tabstop=2     " Width of tabstop
+set shiftwidth=2  " Indent width
 
 " Backspace Problem-Workarround
 set backspace=indent,eol,start
+
+" Disable default status line
+set noshowmode
 
 " Store last cursor position
 if has("autocmd")
@@ -66,6 +69,20 @@ augroup cline
     au WinEnter,InsertLeave * set cursorline
 augroup END
 " }}}
+
+" Autocompletion rebind {{{
+if has("gui_running")
+    " C-Space seems to work under gVim on both Linux and win32
+    inoremap <C-Space> <C-n>
+else " no gui
+  if has("unix")
+    inoremap <Nul> <C-n>
+  else
+  " I have no idea of the name of Ctrl-Space elsewhere
+  endif
+endif
+" }}}
+
 
 " Backups {{{
 set backup                        " enable backups
