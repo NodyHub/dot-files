@@ -7,9 +7,6 @@ echo [+] Fetch ZSH and VIM plugins
 git submodule init
 git submodule update
 
-echo [+] Add VIM Plugin loader
-curl -fLo .vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
 echo [+] Prepare zipfile `pwd`/$DOT_FILE
 if [ -f $DOT_FILE ]
 then
