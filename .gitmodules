@@ -18,3 +18,6 @@
 [submodule ".vim/pack/plugins/start/vim-vagrant"]
 	path = .vim/pack/plugins/start/vim-vagrant
 	url = https://github.com/hashivim/vim-vagrant.git
+[submodule ".vim/pack/plugins/start/vim-go"]
+	path = .vim/pack/plugins/start/vim-go
+	url = https://github.com/fatih/vim-go.git
