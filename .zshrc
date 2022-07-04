@@ -164,8 +164,11 @@ alias mv='mv -i'
 alias rm='rm -v'
 alias ln='ln -i'
 alias chown='chown --preserve-root'
-alias chmod='chmod --preserve-root'
-alias chgrp='chgrp --preserve-root'
+if [[ $(uname) != "Darwin" ]]
+then 
+  alias chmod='chmod --preserve-root'
+  alias chgrp='chgrp --preserve-root'
+fi
 alias cls=' echo -ne "\033c"'       # clear screen for real (it does not work in Terminology)
 # }}}
 
