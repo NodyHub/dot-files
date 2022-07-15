@@ -5,7 +5,7 @@
  cd ~/dot-files
  ./deploy.sh
  cd ~
- rm -rf ~/dot-filest
+ rm -rf ~/dot-files
  sudo chsh -s $(which zsh) $(whoami)
  
  exit 0
