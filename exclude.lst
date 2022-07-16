@@ -8,3 +8,4 @@ remote-hosts
 gsettings.sh
 dfile.tar.gz
 test
+dot-files.sh
