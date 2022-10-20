@@ -292,8 +292,14 @@ LESSCHARSET=UTF-8
 # SDL_VIDEO_FULLSCREEN_HEAD=1
 
 # Extend path
-export PATH="$HOME/bin:/sbin:$PATH:$HOME/go/bin:$HOME/.local/bin"
-export GOPATH="$HOME/go"
+export PATH="$HOME/bin:/sbin:$PATH:$HOME/.local/bin"
+
+# Check for golang
+if [ -d /usr/local/go/bin ]
+then
+   export GOPATH="$HOME/go"
+   export PATH="$PATH:/usr/local/go/bin:$HOME/go/bin"
+fi
 
 case $TERM in
     xterm*)
