@@ -11,7 +11,7 @@ $ sudo apt-get install -y zsh vim
 ## Just deploy
 
 ```shell
-$ curl -fsSL https://raw.githubusercontent.com/NodyHub/dot-files/master/dot-files.sh
+$ curl -fsSL https://raw.githubusercontent.com/NodyHub/dot-files/master/helper/get.sh | bash
 ```
 
 ## Roll out
