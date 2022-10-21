@@ -289,16 +289,11 @@ man() {
 
 LESSCHARSET=UTF-8
 
-# SDL_VIDEO_FULLSCREEN_HEAD=1
-
-# Extend path
-export PATH="$HOME/bin:/sbin:$PATH:$HOME/.local/bin"
-
 # Check for golang
-if [ -d /usr/local/go/bin ]
+if [ -f $(which go) ]
 then
    export GOPATH="$HOME/go"
-   export PATH="$PATH:/usr/local/go/bin:$HOME/go/bin"
+   export PATH="$PATH:$HOME/go/bin"
 fi
 
 case $TERM in
