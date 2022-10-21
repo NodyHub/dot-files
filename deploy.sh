@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASEDIR=$(dirname "$0")
+BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DOT_FILE=dfiles.tar.gz
 EXTRACT_CMD="cd ~ ; [ -d .zsh ] && rm -rf .zsh ; tar xvzf $DOT_FILE -C . ; rm $DOT_FILE"
 
@@ -18,9 +18,9 @@ tar -c --exclude-from exclude.lst  -zvf $BASEDIR/$DOT_FILE .
 if [ -f remote-hosts ]
 then
     echo [+] Iterate over destinations
-    
+
     declare -a arr=(`cat $BASEDIR/remote-hosts`)
-    
+
     for i in "${arr[@]}"
     do
        echo [+] Deploy on $i
@@ -42,5 +42,3 @@ rm $BASEDIR/$DOT_FILE
 
 echo [+] Finished
 exit 0
-
-
