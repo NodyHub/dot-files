@@ -290,7 +290,7 @@ man() {
 LESSCHARSET=UTF-8
 
 # Check for golang
-if [ -f $(which go) ]
+if [[ ! $(which go) ]]
 then
    export GOPATH="$HOME/go"
    export PATH="$PATH:$HOME/go/bin"
