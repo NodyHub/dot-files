@@ -43,4 +43,10 @@ curl -fsSL https://raw.githubusercontent.com/NodyHub/dot-files/master/helper/ins
 curl -fsSL https://raw.githubusercontent.com/NodyHub/dot-files/master/helper/install-os-pkgs.sh | bash
 ```
 
+## Install Helm
+
+```shell
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+```
+
 
