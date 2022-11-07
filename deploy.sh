@@ -2,7 +2,7 @@
 
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DOT_FILE=dfiles.tar.gz
-EXTRACT_CMD="cd ~ ; [ -d .zsh ] && rm -rf .zsh ; tar xvzf $DOT_FILE -C . ; rm $DOT_FILE"
+EXTRACT_CMD="cd ~ ; [ -d .zsh ] && rm -rf .zsh ; tar xzf $DOT_FILE -C . ; rm $DOT_FILE"
 
 echo [+] Fetch ZSH and VIM plugins
 git submodule init
@@ -13,7 +13,7 @@ if [ -f $BASEDIR/$DOT_FILE ]
 then
 	rm $BASEDIR/$DOT_FILE
 fi
-tar -c --exclude-from exclude.lst  -zvf $BASEDIR/$DOT_FILE .
+tar -c --exclude-from exclude.lst  -zf $BASEDIR/$DOT_FILE .
 
 if [ -f remote-hosts ]
 then
