@@ -296,6 +296,30 @@ then
    export PATH="$PATH:$HOME/go/bin"
 fi
 
+# Check for kubectl
+if [[ -x $(which kubectl) ]]
+then
+   source <(kubectl completion zsh)
+fi
+
+# Check for Consul
+if [[ -x $(which consul) ]]
+then
+   complete -o nospace -C $(which consul) consul
+fi
+
+# Check for Nomad
+if [[ -x $(which nomad) ]]
+then
+   complete -o nospace -C $(which nomad) nomad
+fi
+
+# Check for Waypoint
+if [[ -x $(which waypoint) ]]
+then
+   complete -o nospace -C $(which waypoint) waypoint
+fi
+
 case $TERM in
     xterm*)
         precmd () {print -Pn "\e]0;%n@%m: %~\a"}
