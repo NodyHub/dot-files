@@ -306,6 +306,12 @@ then
    source <(kubectl completion zsh)
 fi
 
+# Check for Minikube
+if [[ -x $(which minikube) ]]
+then
+   source <(minikube completion zsh)
+fi
+
 # Check for Consul
 if [[ -x $(which consul) ]]
 then
