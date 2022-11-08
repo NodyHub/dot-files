@@ -28,7 +28,7 @@ echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https:/
 
 echo ">> Install kubelet and kubeadm"
 apt-get update
-apt-get install -yq kubelet=$K8S_VERSION kubeadm=$K8S_VERSION
+apt-get install -yq kubelet=$K8S_VERSION kubeadm=$K8S_VERSION kubectl
 
 echo ">> Adjust bridge configuration"
 cat > /etc/sysctl.d/20-bridge-nf.conf <<EOF
