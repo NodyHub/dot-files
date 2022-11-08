@@ -31,6 +31,12 @@ curl -fsSL https://raw.githubusercontent.com/NodyHub/dot-files/master/helper/ins
 curl -fsSL https://raw.githubusercontent.com/NodyHub/dot-files/master/helper/install-minikube.sh | bash
 ```
 
+## Install kubeadm
+
+```shell
+curl -fsSL https://raw.githubusercontent.com/NodyHub/dot-files/master/helper/install-kubeadm.sh | bash
+```
+
 ## Install NeoVIM
 
 ```shell
