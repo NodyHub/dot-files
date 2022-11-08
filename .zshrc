@@ -296,6 +296,10 @@ then
    export PATH="$PATH:$HOME/go/bin"
 fi
 
+# Load compinit
+autoload -U +X bashcompinit && bashcompinit
+autoload -U +X compinit && compinit
+
 # Check for kubectl
 if [[ -x $(which kubectl) ]]
 then
