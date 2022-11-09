@@ -324,6 +324,12 @@ then
    complete -o nospace -C $(which nomad) nomad
 fi
 
+# Check for Terraform
+if [[ -x $(which terraform) ]]
+then
+   complete -o nospace -C $(which terraform) terraform
+fi
+
 # Check for Waypoint
 if [[ -x $(which waypoint) ]]
 then
