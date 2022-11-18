@@ -8,6 +8,9 @@
 [submodule ".zsh/zsh-completions"]
 	path = .zsh/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions
+[submodule ".zsh/zsh-z"]
+	path = .zsh/zsh-z
+	url = https://github.com/agkozak/zsh-z
 # VIM Plugins
 [submodule ".vim/pack/plugins/start/vim-terraform"]
 	path = .vim/pack/plugins/start/vim-terraform
@@ -21,6 +24,3 @@
 [submodule ".vim/pack/plugins/start/vim-go"]
 	path = .vim/pack/plugins/start/vim-go
 	url = https://github.com/fatih/vim-go.git
-[submodule ".zsh/zsh-z"]
-	path = .zsh/zsh-z
-	url = https://github.com/agkozak/zsh-z

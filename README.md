@@ -34,7 +34,10 @@ $ git submodule add <git-path>
 
 ## ZSH Plugins
 
-* tbd
+* [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
+* [zsh-completions](https://github.com/zsh-users/zsh-completions)
+* [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
+* [Zsh-z](https://github.com/zsh-users/zsh-completions)
 
 ## VIM Plugins
 
