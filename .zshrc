@@ -31,6 +31,8 @@ zstyle ':completion:*' menu select
 # zsh coloring & styling
 autoload -U colors && colors
 
+# Tabcompletion for 'z'
+compdef _zshz ${ZSHZ_CMD:-${_Z_CMD:-z}}
 
 local curdir="%d"
 local hostname="%M"
