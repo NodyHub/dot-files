@@ -100,7 +100,7 @@ get_path() {
 }
 
 function bg_count() {
-  cnt=$(jobs| wc -l | tr -d ' ')
+  cnt=$(jobs | grep -v '(pwd now:' | wc -l | tr -d ' ')
   if [[ $cnt -gt 0 ]]
   then 
     echo -n " [bg:$cnt]"
