@@ -115,11 +115,23 @@ function foo() {
   echo -n "/"
 }
 
+function git_branch_name()
+{
+  branch=$(git symbolic-ref HEAD 2> /dev/null | awk 'BEGIN{FS="/"} {print $NF}')
+  if [[ $branch == "" ]];
+  then
+    :
+  else
+    echo "$user_color($uncolorfg"$branch"$user_color)"
+  fi
+}
+
+
 setopt PROMPT_SUBST
 
 RPROMPT='$(bg_count)'
 
-PS1='$host_color$bold$hostname$user_color${str}[$uncolorfg%(4~|$(foo).../%2~|%~)$user_color${str}]$rootorwhat $uncolorfg$unbold'
+PS1='$host_color$hostname$user_color${str}[$uncolorfg%(4~|$(foo).../%2~|%~)$user_color${str}]$(git_branch_name)$rootorwhat $uncolorfg'
 
 
 ## Modified commands ## {{{
