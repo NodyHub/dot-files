@@ -122,7 +122,13 @@ function git_branch_name()
   then
     :
   else
-    echo "$user_color($uncolorfg"$branch"$user_color)"
+    dirty_cnt=$(git diff --stat | grep -v "changed\|\|insertions\|deletions" | wc -l | tr -d " ")
+    if [[ $dirty_cnt = 0 ]]
+    then
+      echo "$user_color($uncolorfg"$branch"$user_color)"
+    else 
+      echo "$user_color($uncolorfg"$branch"[$dirty_cnt]$user_color)"
+    fi
   fi
 }
 
