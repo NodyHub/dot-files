@@ -70,7 +70,7 @@ if [ "$SESSION_TYPE" = "local" ]
 then
   hostname=""
 else
-  hostname="$hostname "
+  hostname="$hostname:"
 fi
 
 local user_color=$colorfg{green}
@@ -103,7 +103,7 @@ function bg_count() {
   cnt=$(jobs| wc -l | tr -d ' ')
   if [[ $cnt -gt 0 ]]
   then 
-    echo -n "[jobs:$cnt]"
+    echo -n " [bg:$cnt]"
   fi
 }
 
@@ -115,29 +115,27 @@ function foo() {
   echo -n "/"
 }
 
-function git_branch_name()
-{
-  branch=$(git symbolic-ref HEAD 2> /dev/null | awk 'BEGIN{FS="/"} {print $NF}')
-  if [[ $branch == "" ]];
-  then
-    :
-  else
-    dirty_cnt=$(git diff --stat | grep -v "changed\|\|insertions\|deletions" | wc -l | tr -d " ")
-    if [[ $dirty_cnt = 0 ]]
-    then
-      echo "$user_color($uncolorfg"$branch"$user_color)"
-    else 
-      echo "$user_color($uncolorfg"$branch"[$dirty_cnt]$user_color)"
-    fi
-  fi
+git_branch_name () {
+	branch=$(git symbolic-ref HEAD 2> /dev/null | awk 'BEGIN{FS="/"} {print $NF}')
+	if [[ $branch == "" ]]
+	then
+		:
+	else
+		dirty_cnt=$(git diff --stat | grep -v "changed\|\|insertions\|deletions" | wc -l | tr -d " ")
+		if [[ $dirty_cnt = 0 ]]
+		then
+			echo -n "("$branch")"
+		else
+			echo -n "("$branch"[$dirty_cnt])"
+		fi
+	fi
 }
 
 
 setopt PROMPT_SUBST
 
-RPROMPT='$(bg_count)'
-
-PS1='$host_color$hostname$user_color${str}[$uncolorfg%(4~|$(foo).../%2~|%~)$user_color${str}]$(git_branch_name)$rootorwhat $uncolorfg'
+RPROMPT='$(git_branch_name)$(bg_count)'
+PS1='$hostname%(4~|$(foo).../%2~|%~)$rootorwhat '
 
 
 ## Modified commands ## {{{
