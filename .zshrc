@@ -61,6 +61,10 @@ then
 else
   case $(ps -o comm= -p $PPID) in
     sshd|*/sshd) SESSION_TYPE=remote/ssh;;
+    sudo) case $(ps -o comm= -p $(ps -o ppid= -p $(ps -o ppid= -p $PPID))) in
+            sshd|*/sshd) SESSION_TYPE=ssh/sudo;;
+            *) SESSION_TYPE=local;;
+          esac ;;
     *) SESSION_TYPE=local;;
   esac
 fi
