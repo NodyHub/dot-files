@@ -107,7 +107,7 @@ function bg_count() {
   cnt=$(jobs | grep -v '(pwd now:' | wc -l | tr -d ' ')
   if [[ $cnt -gt 0 ]]
   then 
-    echo -n " [bg:$cnt]"
+    echo -n "[bg:$cnt]"
   fi
 }
 
@@ -119,7 +119,7 @@ function foo() {
   echo -n "/"
 }
 
-git_branch_name () {
+function git_branch_name () {
 	branch=$(git symbolic-ref HEAD 2> /dev/null | awk 'BEGIN{FS="/"} {print $NF}')
 	if [[ $branch == "" ]]
 	then
@@ -135,11 +135,22 @@ git_branch_name () {
 	fi
 }
 
+function pre_hostname() {
+  gbn=$(git_branch_name)
+  bgc=$(bg_count)
+  res="$(git_branch_name)$(bg_count)"
+  if [ ! -z "$res" ]
+  then
+    echo -n "$res "
+  fi
+}
+     
+
 
 setopt PROMPT_SUBST
 
-RPROMPT='$(git_branch_name)$(bg_count)'
-PS1='$hostname%(4~|$(foo).../%2~|%~)$rootorwhat '
+RPROMPT=''
+PS1='$(pre_hostname)$hostname%(4~|$(foo).../%2~|%~)$rootorwhat '
 
 
 ## Modified commands ## {{{
