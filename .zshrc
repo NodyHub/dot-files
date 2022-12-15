@@ -320,7 +320,7 @@ man() {
 LESSCHARSET=UTF-8
 
 # Check for golang
-if [[ -x $(which go) ]]
+if [[ -x $(which go 2> /dev/null) ]]
 then
    export GOPATH="$HOME/go"
    export PATH="$PATH:$HOME/go/bin"
@@ -331,37 +331,37 @@ autoload -U +X bashcompinit && bashcompinit
 autoload -U +X compinit && compinit
 
 # Check for kubectl
-if [[ -x $(which kubectl) ]]
+if [[ -x $(which kubectl 2> /dev/null) ]]
 then
    source <(kubectl completion zsh)
 fi
 
 # Check for Minikube
-if [[ -x $(which minikube) ]]
+if [[ -x $(which minikube 2> /dev/null) ]]
 then
    source <(minikube completion zsh)
 fi
 
 # Check for Consul
-if [[ -x $(which consul) ]]
+if [[ -x $(which consul 2> /dev/null) ]]
 then
    complete -o nospace -C $(which consul) consul
 fi
 
 # Check for Nomad
-if [[ -x $(which nomad) ]]
+if [[ -x $(which nomad 2> /dev/null) ]]
 then
    complete -o nospace -C $(which nomad) nomad
 fi
 
 # Check for Terraform
-if [[ -x $(which terraform) ]]
+if [[ -x $(which terraform 2> /dev/null) ]]
 then
    complete -o nospace -C $(which terraform) terraform
 fi
 
 # Check for Waypoint
-if [[ -x $(which waypoint) ]]
+if [[ -x $(which waypoint 2> /dev/null) ]]
 then
    complete -o nospace -C $(which waypoint) waypoint
 fi
