@@ -5,6 +5,10 @@ cd /tmp/dot-files
 ./deploy.sh
 cd -
 rm -rf /tmp/dot-files
-sudo chsh -s $(which zsh) $(whoami)
+
+if [[ "$SHELL" != *"zsh" ]]
+then
+  sudo chsh -s $(which zsh) $(whoami)
+fi
 
 exit 0
