@@ -3,32 +3,32 @@ Collection of my dot-files
 
 ## Requirements
 
-```shell
+```console
 $ sudo apt-get update
 $ sudo apt-get install -y zsh vim
 ```
 
 ## Just deploy
 
-```shell
+```console
 $ curl -fsSL https://raw.githubusercontent.com/NodyHub/dot-files/master/helper/get.sh | bash
 ```
 
 ## Roll out
 
-```shell
+```console
 $ ./deploy.sh
 ```
 
 ## Deploy to remote hosts
 
-```$
+```console
 $ echo "<[user]@host>" >> remote-hosts
 ```
 
 ## Add external repos
 
-```shell
+```console
 $ git submodule add <git-path>
 ```
 
