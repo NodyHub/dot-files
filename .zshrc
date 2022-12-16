@@ -74,11 +74,11 @@ if [ "$SESSION_TYPE" = "local" ]
 then
   hostname=""
 else
-  hostname="$hostname:"
+  hostname="$username@$hostname:"
 fi
 
 local user_color=$colorfg{green}
-if [ `whoami` = 'root' ]
+if [ "$username" = 'root' ]
 then
    user_color=$colorfg{red}
 fi
