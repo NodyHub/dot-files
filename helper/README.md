@@ -19,6 +19,12 @@ curl -fsSL https://raw.githubusercontent.com/NodyHub/dot-files/master/helper/ins
 curl -fsSL https://raw.githubusercontent.com/NodyHub/dot-files/master/helper/gsettings.sh | bash
 ```
 
+## Install docker
+
+```shell
+curl -fsSL https://raw.githubusercontent.com/NodyHub/dot-files/master/helper/install-docker.sh | bash
+```
+
 ## Install kubectl
 
 ```shell
