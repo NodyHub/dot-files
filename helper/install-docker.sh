@@ -25,5 +25,7 @@ sudo systemctl stop docker.service
 sudo systemctl disable docker.service
 sudo systemctl stop docker.socket
 sudo systemctl disable docker.socket
+sudo systemctl stop containerd.service
+sudo systemctl disable containerd.service
 
 exit 0
