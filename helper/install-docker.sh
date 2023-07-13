@@ -20,4 +20,10 @@ echo "2. Install Docker Engine"
 sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
+echo "3. Stop started docker service"
+sudo systemctl stop docker.service
+sudo systemctl disable docker.service
+sudo systemctl stop docker.socket
+sudo systemctl disable docker.socket
+
 exit 0
