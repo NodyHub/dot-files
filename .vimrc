@@ -1,5 +1,6 @@
 " Coloring
 syntax enable
+syntax on
 set background=dark
 
 " Highlight line
@@ -30,7 +31,7 @@ set cinoptions=(0,m1,:1
 set formatoptions=tcqr2
 set laststatus=2
 set nomodeline
-set clipboard=unnamed
+set clipboard=unnamedplus
 set softtabstop=3
 set showtabline=1
 set smartcase
@@ -43,6 +44,10 @@ set hidden
 set number
 set backspace=indent,eol,start
 set ttimeoutlen=100
+set completeopt=noinsert,menuone,noselect " Modifies the auto-complete menu to behave more like an IDE.
+set mouse=a " Allow to use the mouse in the editor
+set wildmenu " Show a more advance menu
+
 
 
 " Tabbing
@@ -101,24 +106,6 @@ if !isdirectory(expand(&directory))
     call mkdir(expand(&directory), "p")
 endif
 " }}}
-
-
-" Add VIM Plugins
-
-" " Statusline {{{
-" set statusline=
-" set statusline+=%7*\[%n]                                  "buffernr
-" set statusline+=%1*\ %<%F\                                "File+path
-" set statusline+=%2*\ %y\                                  "FileType
-" set statusline+=%3*\ %{''.(&fenc!=''?&fenc:&enc).''}      "Encoding
-" set statusline+=%3*\ %{(&bomb?\",BOM\":\"\")}\            "Encoding2
-" set statusline+=%4*\ %{&ff}\                              "FileFormat (dos/unix..)
-" set statusline+=%5*\ %{&spelllang}\                       "Spellanguage
-" set statusline+=%8*\ %=\ row:%l/%L\ (%03p%%)\             "Rownumber/total (%)
-" set statusline+=%9*\ col:%03c\                            "Colnr
-" set statusline+=%0*\ \ %m%r%w\ %P\ \                      "Modified? Readonly?  Top/bot.
-" " }}}
-
 
 " UTF-8 encodig wihthin files
 set encoding=utf-8
