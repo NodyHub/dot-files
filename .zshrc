@@ -210,7 +210,7 @@ alias cd..='cd ..'
 # }}}
 
 ## Github related
-alias ghopen='open $(git config remote.origin.url | sed "s/git@\(.*\):\(.*\).git/https:\/\/\1\/\2/")/tree/$(git symbolic-ref --quiet --short HEAD )/$(git rev-parse --show-prefix)'
+alias ghopen='open $(git config remote.origin.url | sed "s/\.[^.]*$//" | sed "s/git@\(.*\):\(.*\).git/https:\/\/\1\/\2/")/tree/$(git symbolic-ref --quiet --short HEAD )/$(git rev-parse --show-prefix)'
 
 # key bindings!!
 # create a zkbd compatible hash;
