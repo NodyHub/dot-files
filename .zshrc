@@ -120,9 +120,9 @@ function foo() {
 }
 
 function git_branch_name () {
-	case "$(git symbolic-ref --quiet --short HEAD)" in
-		("") BOC=$(git show -s --format=%h)  ;;
-		(*) BOC=$(git symbolic-ref --quiet --short HEAD)  ;;
+	case "$(git symbolic-ref --quiet --short HEAD 2> /dev/null)" in
+		("") BOC=$(git show -s --format=%h 2> /dev/null)  ;;
+		(*) BOC=$(git symbolic-ref --quiet --short HEAD 2> /dev/null)  ;;
 	esac
 	if [[ $BOC == "" ]]
 	then
