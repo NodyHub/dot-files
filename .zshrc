@@ -120,17 +120,20 @@ function foo() {
 }
 
 function git_branch_name () {
-	branch=$(git symbolic-ref HEAD 2> /dev/null | awk 'BEGIN{FS="/"} {print $NF}')
-	if [[ $branch == "" ]]
+	case "$(git symbolic-ref --quiet --short HEAD)" in
+		("") BOC=$(git show -s --format=%h)  ;;
+		(*) BOC=$(git symbolic-ref --quiet --short HEAD)  ;;
+	esac
+	if [[ $BOC == "" ]]
 	then
 		:
 	else
 		dirty_cnt=$(git diff --stat | grep -v "changed\|\|insertions\|deletions" | wc -l | tr -d " ")
 		if [[ $dirty_cnt = 0 ]]
 		then
-			echo -n "("$branch")"
+			echo -n "("$BOC")"
 		else
-			echo -n "("$branch"[$dirty_cnt])"
+			echo -n "("$BOC"[$dirty_cnt])"
 		fi
 	fi
 }
@@ -210,7 +213,36 @@ alias cd..='cd ..'
 # }}}
 
 ## Github related
-alias ghopen='open $(git config remote.origin.url | sed "s/\.[^.]*$//" | sed "s/git@\(.*\):\(.*\).git/https:\/\/\1\/\2/")/tree/$(git symbolic-ref --quiet --short HEAD )/$(git rev-parse --show-prefix)'
+function ghopen()
+{
+  REMOTE_ORIGIN_URL=$(git config remote.origin.url)
+
+  # Get remote url
+  case $REMOTE_ORIGIN_URL in
+    *"@"*)
+      URL="https://github.com/$(echo -n $REMOTE_ORIGIN_URL | cut -d ":" -f 2 | cut -d "." -f 1)"
+      ;;
+    "")
+      echo "Not in GitHub repo"
+      return 0
+      ;;
+    *)
+      URL=$REMOTE_ORIGIN_URL
+  esac
+
+  # branch or hash
+  case "$(git symbolic-ref --quiet --short HEAD)" in
+    "")
+      BOC=$(git show -s --format=%H)
+      ;;
+    *)
+      BOC=$(git symbolic-ref --quiet --short HEAD)
+      ;;
+  esac
+
+  URL="$URL/tree/$BOC/$(git rev-parse --show-prefix)"
+  open $URL
+}
 
 # key bindings!!
 # create a zkbd compatible hash;
