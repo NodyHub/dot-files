@@ -215,7 +215,7 @@ alias cd..='cd ..'
 ## Github related
 function ghopen()
 {
-  REMOTE_ORIGIN_URL=$(git config remote.origin.url)
+  REMOTE_ORIGIN_URL=$(git config remote.origin.url | sed "s/\.git$//")
 
   # Get remote url
   case $REMOTE_ORIGIN_URL in
