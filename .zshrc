@@ -241,6 +241,35 @@ function ghopen()
   esac
 
   URL="$URL/tree/$BOC/$(git rev-parse --show-prefix)"
+  echo "Opening $URL"
+  open $URL
+}
+function ghpr()
+{
+   # Get PR ID
+   PR_ID=$(git ls-remote origin 'pull/*/head' | grep -F -f <(git rev-parse HEAD) | awk -F'/' '{print $3}' 2>&1)
+   if [[ -z "$PR_ID" ]]
+   then
+      echo "No PR found"
+      return 0
+   fi
+
+  # Get remote url
+  REMOTE_ORIGIN_URL=$(git config remote.origin.url | sed "s/\.git$//")
+  case $REMOTE_ORIGIN_URL in
+    *"@"*)
+      URL="https://github.com/$(echo -n $REMOTE_ORIGIN_URL | cut -d ":" -f 2 | cut -d "." -f 1)"
+      ;;
+    "")
+      echo "Not in GitHub repo"
+      return 0
+      ;;
+    *)
+      URL=$REMOTE_ORIGIN_URL
+  esac
+  URL="$URL/pull/$PR_ID"
+
+  echo "Opening $URL"
   open $URL
 }
 
