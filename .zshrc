@@ -89,6 +89,17 @@ then
     host_color=$colorfg{magenta}
 fi
 
+# declare a function to export GITHUB_TOKEN to the current shell
+# the token is stored in ~/.ssh/github_token and is only exported if it exists
+# the function is called `export_github_token`
+function export_github_token() {
+  if [[ -f ~/.ssh/github_token ]]; then
+    export GITHUB_TOKEN=$(cat ~/.ssh/github_token)
+  else
+    echo "GITHUB_TOKEN not found in ~/.ssh/github_token"
+  fi
+}
+
 
 
 # Check if current working directory is in home directory or not
