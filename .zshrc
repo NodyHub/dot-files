@@ -90,13 +90,18 @@ then
 fi
 
 # declare a function to export GITHUB_TOKEN to the current shell
-# the token is stored in ~/.ssh/github_token and is only exported if it exists
-# the function is called `export_github_token`
+# the token is stored in ~/.ssh/github_token_$type (where $type is the parameter) 
+# if no parameter is provided, default is 'user'
+# the function is called `export_github_token [type]`
 function export_github_token() {
-  if [[ -f ~/.ssh/github_token ]]; then
-    export GITHUB_TOKEN=$(cat ~/.ssh/github_token)
+  local token_type=${1:-user}
+  local token_file=~/.ssh/github_token_$token_type
+  
+  if [[ -f $token_file ]]; then
+    export GITHUB_TOKEN=$(cat $token_file)
+    echo "GITHUB_TOKEN loaded from $token_file"
   else
-    echo "GITHUB_TOKEN not found in ~/.ssh/github_token"
+    echo "GITHUB_TOKEN not found in $token_file"
   fi
 }
 
