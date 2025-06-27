@@ -26,7 +26,6 @@ for dir in "$ZSH/lib/"*/(N); do
   if [[ "$dir_name" != "core" && "$dir_name" != "exports" ]]; then
     for file in "$dir"*.zsh(N); do
       if [[ -f "$file" ]]; then
-        echo "load $file"
         source "$file"
       fi
     done

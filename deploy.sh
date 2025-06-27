@@ -7,8 +7,11 @@ DOT_FILE=dfiles.tar.gz
 REMOVE_DIRS_CMD="rm -rf ~/.zsh/{lib,plugins,custom}"
 SETUP_DIRS_CMD="mkdir -p ~/.zsh/{lib,plugins,custom} ~/.zsh/lib/{aliases,completion,core,exports,functions,git,history,keymap,prompt,tools}"
 
+# Create .hushlogin file to disable "Last login" message
+HUSHLOGIN_CMD="touch ~/.hushlogin"
+
 # Define the extract command with directory setup
-EXTRACT_CMD="$REMOVE_DIRS_CMD ; cd ~ ; tar xzf $DOT_FILE -C . ; rm $DOT_FILE ; $SETUP_DIRS_CMD"
+EXTRACT_CMD="$REMOVE_DIRS_CMD ; cd ~ ; tar xzf $DOT_FILE -C . ; rm $DOT_FILE ; $SETUP_DIRS_CMD ; $HUSHLOGIN_CMD"
 
 echo [+] Fetch ZSH and VIM plugins
 git submodule init

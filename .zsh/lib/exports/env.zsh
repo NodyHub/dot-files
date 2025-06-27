@@ -20,3 +20,6 @@ if [[ $(uname) = "Darwin" ]]; then
 else
   eval `dircolors -b ~/.dir_colors`
 fi
+
+# Disable "You have mail" notifications
+export MAILCHECK=0
