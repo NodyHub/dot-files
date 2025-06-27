@@ -2,6 +2,22 @@ export EDITOR="vim"
 export ZSH="$HOME/.zsh/"
 export GPG_TTY=$(tty)
 
+# Cache variables for git status
+ZSH_GIT_BRANCH=""
+ZSH_GIT_DIRTY=0
+ZSH_GIT_LAST_WORKING_DIR=""
+ZSH_GIT_LAST_CHECK_TIME=0
+
+# Clear git cache when directory changes or after a timeout
+function zsh_git_invalidate_cache() {
+  ZSH_GIT_BRANCH=""
+  ZSH_GIT_DIRTY=0
+}
+
+# Hook to auto-update git info when directory changes
+autoload -Uz add-zsh-hook
+add-zsh-hook chpwd zsh_git_invalidate_cache
+
 # load plugins
 for plugin in $ZSH/*
 do
@@ -136,28 +152,50 @@ function foo() {
 }
 
 function git_branch_name () {
-	case "$(git symbolic-ref --quiet --short HEAD 2> /dev/null)" in
-		("") BOC=$(git show -s --format=%h 2> /dev/null)  ;;
-		(*) BOC=$(git symbolic-ref --quiet --short HEAD 2> /dev/null)  ;;
-	esac
-	if [[ $BOC == "" ]]
-	then
-		:
-	else
-		dirty_cnt=$(git diff --stat | grep -v "changed\|\|insertions\|deletions" | wc -l | tr -d " ")
-		if [[ $dirty_cnt = 0 ]]
-		then
-			echo -n "("$BOC")"
-		else
-			echo -n "("$BOC"[$dirty_cnt])"
-		fi
-	fi
+  local current_dir=$(pwd)
+  local current_time=$(date +%s)
+  
+  # Check if we need to refresh the git info
+  # Refresh if: directory changed, or 30 seconds elapsed since last check
+  if [[ "$current_dir" != "$ZSH_GIT_LAST_WORKING_DIR" ]] || \
+     [[ $(($current_time - $ZSH_GIT_LAST_CHECK_TIME)) -gt 30 ]]; then
+  
+    # Check if we're in a git repo
+    if git rev-parse --is-inside-work-tree &>/dev/null; then
+      # Get branch name or commit hash
+      ZSH_GIT_BRANCH=$(git symbolic-ref --quiet --short HEAD 2>/dev/null || git show -s --format=%h 2>/dev/null)
+      
+      # Check for dirty status - much faster than git diff --stat
+      if [[ -n "$(git status --porcelain 2>/dev/null)" ]]; then
+        ZSH_GIT_DIRTY=1
+      else
+        ZSH_GIT_DIRTY=0
+      fi
+    else
+      # Not in a git repo
+      ZSH_GIT_BRANCH=""
+      ZSH_GIT_DIRTY=0
+    fi
+    
+    # Update cache metadata
+    ZSH_GIT_LAST_WORKING_DIR="$current_dir"
+    ZSH_GIT_LAST_CHECK_TIME=$current_time
+  fi
+  
+  # Display branch info from cache
+  if [[ -n "$ZSH_GIT_BRANCH" ]]; then
+    if [[ "$ZSH_GIT_DIRTY" -eq 0 ]]; then
+      echo -n "($ZSH_GIT_BRANCH)"
+    else
+      echo -n "($ZSH_GIT_BRANCH*)"
+    fi
+  fi
 }
 
 function pre_hostname() {
   gbn=$(git_branch_name)
   bgc=$(bg_count)
-  res="$(git_branch_name)$(bg_count)"
+  res="${gbn}${bgc}"
   if [ ! -z "$res" ]
   then
     echo -n "$res "
@@ -313,7 +351,7 @@ key[PageDown]=${terminfo[knp]}
 [[ -n "${key[Insert]}"   ]]  && bindkey  "${key[Insert]}"   overwrite-mode
 [[ -n "${key[Delete]}"   ]]  && bindkey  "${key[Delete]}"   delete-char
 # [[ -n "${key[Up]}"       ]]  && bindkey  "${key[Up]}"       up-line-or-history
-# [[ -n "${key[Down]}"     ]]  && bindkey  "${key[Down]}"     down-line-or-history
+# [[ -n "${key[Down]}"     ]]  && bindkey  "${key[Down]"     down-line-or-history
 [[ -n "${key[Up]}"      ]]  && bindkey   "${key[Up]}"       up-line-or-beginning-search
 [[ -n "${key[Down]}"    ]]  && bindkey   "${key[Down]}"    down-line-or-beginning-search
 [[ -n "${key[Left]}"     ]]  && bindkey  "${key[Left]}"     backward-char
@@ -454,6 +492,43 @@ esac
 # Tabcompletion for 'z'
 compdef _zshz ${ZSHZ_CMD:-${_Z_CMD:-z}}
 
+# Periodically update git status in the background
+function precmd_update_git_vars() {
+  if [[ -n "$TMOUT" && "$TMOUT" -gt 0 ]]; then
+    if ! kill -0 $ASYNC_PROC_PID 2>/dev/null; then
+      # If we're in a git repo, start async process to update git status
+      if git rev-parse --is-inside-work-tree &>/dev/null; then
+        # Kill any existing async process
+        ASYNC_PROC_PID=0
+        
+        # Start background job to update git vars
+        {
+          # Get branch name or commit hash
+          ZSH_GIT_BRANCH=$(git symbolic-ref --quiet --short HEAD 2>/dev/null || git show -s --format=%h 2>/dev/null)
+          
+          # Check for dirty status - much faster than git diff --stat
+          if [[ -n "$(git status --porcelain 2>/dev/null)" ]]; then
+            ZSH_GIT_DIRTY=1
+          else
+            ZSH_GIT_DIRTY=0
+          fi
+          
+          # Save current directory and time
+          ZSH_GIT_LAST_WORKING_DIR=$(pwd)
+          ZSH_GIT_LAST_CHECK_TIME=$(date +%s)
+          
+          kill -WINCH $$  # Signal parent process to refresh prompt
+        } &!
+        
+        ASYNC_PROC_PID=$!
+      fi
+    fi
+  fi
+}
+
+# Add the precmd hook to update git vars
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd precmd_update_git_vars
 
 ############################################################################################################################
 # Functions
