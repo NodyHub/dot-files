@@ -48,3 +48,15 @@ for plugin in $ZSH/plugins/*(N); do
     fi
   fi
 done
+
+# # Special case for zsh-z plugin which is in a different location
+# if [[ -d "$ZSH/zsh-z" ]]; then
+#   if [[ -f "$ZSH/zsh-z/zsh-z.plugin.zsh" ]]; then
+#     source "$ZSH/zsh-z/zsh-z.plugin.zsh"
+#     fpath=("$ZSH/zsh-z" $fpath)
+#   fi
+# fi
+
+# Initialize completions
+autoload -U compinit
+compinit
