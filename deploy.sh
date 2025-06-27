@@ -2,7 +2,12 @@
 
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DOT_FILE=dfiles.tar.gz
-EXTRACT_CMD="cd ~ ; [ -d .zsh ] && rm -rf .zsh ; tar xzf $DOT_FILE -C . ; rm $DOT_FILE"
+
+# Define the directory setup command
+SETUP_DIRS_CMD="mkdir -p ~/.zsh/{lib,plugins,custom} ~/.zsh/lib/{aliases,completion,core,exports,functions,git,history,keymap,prompt,tools}"
+
+# Define the extract command with directory setup
+EXTRACT_CMD="cd ~ ; tar xzf $DOT_FILE -C . ; rm $DOT_FILE ; $SETUP_DIRS_CMD"
 
 echo [+] Fetch ZSH and VIM plugins
 git submodule init
@@ -19,25 +24,28 @@ if [ -f remote-hosts ]
 then
     echo [+] Iterate over destinations
 
-    declare -a arr=(`cat $BASEDIR/remote-hosts`)
+    # Read hosts into an array in a way that works in most bash versions
+    hosts=()
+    while IFS='' read -r line || [[ -n "$line" ]]; do
+        [[ ! -z "$line" ]] && hosts+=("$line")
+    done < "$BASEDIR/remote-hosts"
 
-    for i in "${arr[@]}"
+    for i in "${hosts[@]}"
     do
        echo [+] Deploy on $i
-       home_dir=`ssh $i pwd`
+       home_dir=$(ssh "$i" pwd)
        scp $BASEDIR/$DOT_FILE $i:$home_dir/$DOT_FILE
        echo [+] dot-files transfered
-       ssh $i $EXTRACT_CMD
-       echo [+] data extractat at $i:$home_dir
+       ssh $i "$EXTRACT_CMD"
+       echo [+] data extracted at $i:$home_dir
     done
 else
     echo [!] No 'remote-hosts' found, Skip!
 fi
 
 echo [+] Deploy local
-prev_dir=`pwd`
 cp $BASEDIR/$DOT_FILE ~/$DOT_FILE
-eval $EXTRACT_CMD
+eval "$EXTRACT_CMD"
 rm $BASEDIR/$DOT_FILE
 
 echo [+] Finished
