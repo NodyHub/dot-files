@@ -2,7 +2,7 @@
 # This file loads all modular configuration files
 
 # Set ZSH configuration path
-export ZSH="$HOME/.zsh/"
+export ZSH="$HOME/.zsh"
 
 # Create directories if they don't exist
 [[ -d "$ZSH" ]] || mkdir -p "$ZSH"
@@ -26,6 +26,7 @@ for dir in "$ZSH/lib/"*/(N); do
   if [[ "$dir_name" != "core" && "$dir_name" != "exports" ]]; then
     for file in "$dir"*.zsh(N); do
       if [[ -f "$file" ]]; then
+        echo "load $file"
         source "$file"
       fi
     done
@@ -48,14 +49,6 @@ for plugin in $ZSH/plugins/*(N); do
     fi
   fi
 done
-
-# # Special case for zsh-z plugin which is in a different location
-# if [[ -d "$ZSH/zsh-z" ]]; then
-#   if [[ -f "$ZSH/zsh-z/zsh-z.plugin.zsh" ]]; then
-#     source "$ZSH/zsh-z/zsh-z.plugin.zsh"
-#     fpath=("$ZSH/zsh-z" $fpath)
-#   fi
-# fi
 
 # Initialize completions
 autoload -U compinit
