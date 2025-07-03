@@ -378,8 +378,8 @@ EXEC 01;31  # Unix
 # Unimportant text files - Aluminum (muted gray)
 # Using a subtle dark gray that blends with Tango Light theme
 .log 90
-"*~" 90
-"*#" 90
+# "*~" 90
+# "*#" 90
 
 # Unimportant non-text files - Sky Blue (muted)
 # Subtle blue that's visible but not distracting on Tango Light theme
@@ -396,7 +396,7 @@ EXEC 01;31  # Unix
 .ORIG 36
 .swp 36
 .swo 36
-"*,v" 36
+# "*,v" 36
 #.bak 01;33
 #.BAK 01;33
 #.old 01;33
