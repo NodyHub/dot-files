@@ -39,16 +39,20 @@ for custom in $ZSH/custom/*.zsh(N); do
   fi
 done
 
-# Load plugins (safely handling no matches)
-for plugin in $ZSH/plugins/*(N); do
-  if [[ -d "$plugin" ]]; then
-    plugin_name=$(basename "$plugin")
-    if [[ -f "$ZSH/plugins/$plugin_name/$plugin_name.plugin.zsh" ]]; then
-      source "$ZSH/plugins/$plugin_name/$plugin_name.plugin.zsh"
+# Load plugins with caching for better performance
+if [[ -f "$ZSH/lib/core/plugin-cache.zsh" ]]; then
+  source "$ZSH/lib/core/plugin-cache.zsh"
+  load_cached_plugins
+else
+  # Fallback to standard loading if cache system isn't available
+  for plugin in $ZSH/plugins/*(N); do
+    if [[ -d "$plugin" ]]; then
+      plugin_name=$(basename "$plugin")
+      if [[ -f "$ZSH/plugins/$plugin_name/$plugin_name.plugin.zsh" ]]; then
+        source "$ZSH/plugins/$plugin_name/$plugin_name.plugin.zsh"
+      fi
     fi
-  fi
-done
+  done
+fi
 
-# Initialize completions
-autoload -U compinit
-compinit
+# Enable plugin cache debugging with: export ZSH_DEBUG=1
