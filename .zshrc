@@ -9,10 +9,17 @@ export ZSH="$HOME/.zsh"
 [[ -d "$ZSH/plugins" ]] || mkdir -p "$ZSH/plugins" 
 [[ -d "$ZSH/custom" ]] || mkdir -p "$ZSH/custom"
 
+# Load profiler first if enabled
+if [[ -f "$ZSH/lib/core/profiler.zsh" ]]; then
+  source "$ZSH/lib/core/profiler.zsh"
+fi
+
 # Load library files in a specific order to ensure dependencies are met
 # Core should be loaded first
 if [[ -f "$ZSH/lib/core/core.zsh" ]]; then
+  [[ -n "$ZSH_PROFILE" ]] && zsh_profile_start "Loading core"
   source "$ZSH/lib/core/core.zsh"
+  [[ -n "$ZSH_PROFILE" ]] && zsh_profile_end "Loading core"
 fi
 
 # Then load exports (safely handling no matches)
@@ -41,10 +48,13 @@ done
 
 # Load plugins with caching for better performance
 if [[ -f "$ZSH/lib/core/plugin-cache.zsh" ]]; then
+  [[ -n "$ZSH_PROFILE" ]] && zsh_profile_start "Loading plugins"
   source "$ZSH/lib/core/plugin-cache.zsh"
   load_cached_plugins
+  [[ -n "$ZSH_PROFILE" ]] && zsh_profile_end "Loading plugins"
 else
   # Fallback to standard loading if cache system isn't available
+  [[ -n "$ZSH_PROFILE" ]] && zsh_profile_start "Loading plugins"
   for plugin in $ZSH/plugins/*(N); do
     if [[ -d "$plugin" ]]; then
       plugin_name=$(basename "$plugin")
@@ -53,6 +63,13 @@ else
       fi
     fi
   done
+  [[ -n "$ZSH_PROFILE" ]] && zsh_profile_end "Loading plugins"
 fi
 
-# Enable plugin cache debugging with: export ZSH_DEBUG=1
+# Final initialization and performance reporting
+[[ -n "$ZSH_PROFILE" ]] && zsh_profile_startup_complete
+
+# Debug options:
+# export ZSH_DEBUG=1    # Enable plugin cache debugging
+# export ZSH_PROFILE=1  # Enable startup profiling
+# export ZSH_COMMAND_TIME=1  # Show execution time for slow commands

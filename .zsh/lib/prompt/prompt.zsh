@@ -74,25 +74,33 @@ function bg_count() {
   fi
 }
 
-# Path formatter for prompt
-function foo() {
-  if [[ $(pwd) == $HOME* ]]; then
+# Path formatter for prompt - optimized
+function path_shortener() {
+  # This is more efficient than calling pwd repeatedly
+  if [[ $PWD == $HOME* ]]; then
     echo -n "~"
   fi
   echo -n "/"
 }
 
-# Pre hostname function for prompt
-function pre_hostname() {
-  gbn=$(git_branch_name)
-  bgc=$(bg_count)
-  res="${gbn}${bgc}"
-  if [ ! -z "$res" ]; then
-    echo -n "$res "
+# Pre-command to build prompt components - runs once before prompt is displayed
+function build_prompt() {
+  # Cache prompt components for efficiency
+  PROMPT_GIT_INFO=$(git_branch_name)
+  PROMPT_BG_JOBS=$(bg_count)
+  
+  # Build combined elements only once per prompt
+  PROMPT_PREFIX=""
+  if [[ -n "$PROMPT_GIT_INFO" || -n "$PROMPT_BG_JOBS" ]]; then
+    PROMPT_PREFIX="${PROMPT_GIT_INFO}${PROMPT_BG_JOBS} "
   fi
 }
 
-# Set prompt
+# Add the hook to build prompt components
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd build_prompt
+
+# Set prompt - use cached variables instead of calling functions in PS1
 RPROMPT=''
-# Use direct % character for prompt end to avoid variable expansion issues
-PS1='$(pre_hostname)$hostname%(4~|$(foo).../%2~|%~)%# '
+# Use more efficient form with pre-calculated components
+PS1='$PROMPT_PREFIX$hostname%(4~|$(path_shortener).../%2~|%~)%# '

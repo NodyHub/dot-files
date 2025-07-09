@@ -58,37 +58,38 @@ function git_branch_name () {
   fi
 }
 
-# Periodically update git status in the background
+# More efficient git status update using proper caching
+# We don't need true async for this - just efficient caching
 function precmd_update_git_vars() {
-  if [[ -n "$TMOUT" && "$TMOUT" -gt 0 ]]; then
-    if ! kill -0 $ASYNC_PROC_PID 2>/dev/null; then
-      # If we're in a git repo, start async process to update git status
-      if git rev-parse --is-inside-work-tree &>/dev/null; then
-        # Kill any existing async process
-        ASYNC_PROC_PID=0
-        
-        # Start background job to update git vars
-        {
-          # Get branch name or commit hash
-          ZSH_GIT_BRANCH=$(git symbolic-ref --quiet --short HEAD 2>/dev/null || git show -s --format=%h 2>/dev/null)
-          
-          # Check for dirty status - much faster than git diff --stat
-          if [[ -n "$(git status --porcelain 2>/dev/null)" ]]; then
-            ZSH_GIT_DIRTY=1
-          else
-            ZSH_GIT_DIRTY=0
-          fi
-          
-          # Save current directory and time
-          ZSH_GIT_LAST_WORKING_DIR=$(pwd)
-          ZSH_GIT_LAST_CHECK_TIME=$(date +%s)
-          
-          kill -WINCH $$  # Signal parent process to refresh prompt
-        } &!
-        
-        ASYNC_PROC_PID=$!
-      fi
+  # Update git vars only when needed, not on every prompt
+  local current_dir=$(pwd)
+  local current_time=$(date +%s)
+  
+  # Skip update if we're not in a git repo (fast check)
+  if [[ ! -d .git ]] && ! git rev-parse --git-dir &>/dev/null; then
+    ZSH_GIT_BRANCH=""
+    ZSH_GIT_DIRTY=0
+    return
+  fi
+  
+  # Check if we need to refresh: new dir or cache expired (5 sec)
+  if [[ "$current_dir" != "$ZSH_GIT_LAST_WORKING_DIR" || \
+        $(( current_time - ZSH_GIT_LAST_CHECK_TIME )) -gt 5 ]]; then
+    
+    # Get branch name efficiently (single git call)
+    ZSH_GIT_BRANCH=$(git symbolic-ref --quiet --short HEAD 2>/dev/null || \
+                     git rev-parse --short HEAD 2>/dev/null)
+    
+    # Fast dirty check (no submodule status)
+    if [[ -z "$(git status --porcelain -uno 2>/dev/null)" ]]; then
+      ZSH_GIT_DIRTY=0
+    else
+      ZSH_GIT_DIRTY=1
     fi
+    
+    # Update cache
+    ZSH_GIT_LAST_WORKING_DIR="$current_dir"
+    ZSH_GIT_LAST_CHECK_TIME=$current_time
   fi
 }
 
